@@ -1,8 +1,5 @@
 #include <SPI.h>
 #include <Ethernet.h>
-#include <stdio.h>
-#include <string.h>
-
 
 #define MQ_analog A1
 #define MQ_dig 7
@@ -28,9 +25,7 @@ void setup() {
     Serial.begin(9600);
     pinMode(MQ_analog, INPUT);
     pinMode(MQ_dig, INPUT);
-        while (!Serial) {
-        ;
-    }
+
     if (Ethernet.begin(mac) == 0) {
         Serial.println("Falha ao configurar Ethernet usando o DHCP");
         Ethernet.begin(mac, ip);
@@ -40,30 +35,7 @@ void setup() {
     
 }
 
-// Conecta faz a requisão e desconecta,
-// possivelmente será possível passar os dados dos sensores
-void loop(){
-    //Conexão
-    valor = valorSensor();
-    url = "GET /arduino.php?inf=" + valor;
-    Serial.println(url);
-    if (client.connect(server, 80)) {
-        Serial.println("Conectado!");
-        
-        // Faz a requisição http, definindo a var inf = ola
-        client.println(url);
-    
-        // Não sei a necessidade desta parte
-        client.println("Host: 192.168.0.102");
-        //client.println("Connection: close");
-        client.println();
-    } 
-    else {
-        Serial.println("Falha ao conectar.");
-    }
-    delay(2000);
-}
-
+// Recebe valor do sensor e converte para String
 String valorSensor() {
    valor_analog = analogRead(MQ_analog); 
    valor_dig = digitalRead(MQ_dig);
@@ -71,3 +43,24 @@ String valorSensor() {
    return String(valor_analog);
  
 }
+
+void loop(){
+    valor = valorSensor();
+    url = "GET /arduino.php?inf=" + valor;
+
+    Serial.println(url);
+    if (client.connect(server, 80)) {
+        Serial.println("Conectado!");
+        
+        // Faz a requisição http
+        client.println(url);    
+        client.println("Host: 192.168.0.102");
+        client.println("Connection: close");
+        client.println();
+    } 
+    else {
+        Serial.println("Falha ao conectar.");
+    }
+    delay(4000);
+}
+
