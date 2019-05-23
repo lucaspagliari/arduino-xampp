@@ -9,7 +9,7 @@
 CREATE TABLE arduino(    
   id int not null,    
   inf varchar(30) not null,  
-  primary key (id),  
+  primary key (id) 
 )
 `  
 
