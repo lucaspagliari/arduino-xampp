@@ -1,8 +1,8 @@
-# Conectando com arduino no Servidor php XAMPP
+# Enviando dados do Arduino para o Servidor XAMPP
 
 > Utilizado: php, arduino, ethernet shield e xampp
 
-### How to test:
+### Teste os Scripts php:
 1 - Crie seu DB:  
 
 `
@@ -29,4 +29,3 @@ Estará passando a string "teste" como parâmetro.
 
 Pegue o arquivo arduino e altere os campos ip e o servidor.
 No cmd identifique seu ipv4 com o comando `ipconfig`. Esse valor será utilizado no campo do servidor.
-
