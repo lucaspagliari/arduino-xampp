@@ -17,4 +17,6 @@
 	else{	
 		echo "Valor Inválido ou Nulo";
 	}
+
+	mysqli_close($conn);
 ?>

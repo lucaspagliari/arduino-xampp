@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Gráfico</title>
+    <style type="text/css">
+        BODY {
+            width: 550PX;
+        }
+
+        #chart-container {
+            margin: auto;
+            width: 100%;
+            height: auto;
+            color: #4f7eff46;
+        }
+    </style>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/Chart.min.js"></script>
+
+
+</head>
+
+<body>
+    <div id="chart-container">
+        <canvas class="line-chart"></canvas>
+    </div>
+
+    <script>
+        var id = [];
+        var value = [];
+        var ctx = document.getElementsByClassName("line-chart");
+
+        $.post("data.php", JSON.stringify(),
+            function (data) {
+                var array = data.split(",");
+                for (let i = 0; i < array.length; i++) {
+                    id.push(i);
+                    value.push(parseInt(array[i]));
+                }
+                value.pop();
+                id.pop();
+                graph(id, value);
+            }
+        );
+
+        function graph(id, value) {
+            var lineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: id,
+                    datasets: [{
+                        label: "Taxa de CO2",
+                        data: value,
+                        borderWidth: 2,
+                        borderColor: '#9963ff',
+                        backgroundColor: '#4f7eff46',
+                    }]
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
