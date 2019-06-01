@@ -29,3 +29,11 @@ Estará passando a string "teste" como parâmetro.
 
 Pegue o arquivo arduino e altere os campos ip e o servidor.
 No cmd identifique seu ipv4 com o comando `ipconfig`. Esse valor será utilizado no campo do servidor.
+
+### Gráfico no html  
+
+Baixe JQuery e Chart.js coloque-os na pasta:  
+
+`C:\xampp\htdocs\js`  
+
+Após isso coloque o arquivo .html na pasta htdocs
