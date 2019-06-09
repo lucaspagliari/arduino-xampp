@@ -2,7 +2,7 @@
   
 > Utilizado: XAMPP, Arduino + Ethernet Shield
   
-### Banco de Dados:
+### Banco de Dados:  
 * Inicialize o XAMPP e crie seu banco de dados:  
 
 `
@@ -18,16 +18,19 @@ CREATE TABLE arduino(
 
 `C:\xampp\htdocs`  
 
-Isso possibilitará acessar os scripts pelo navegador.
+Isso possibilitará acessar os scripts pelo navegador.  
   
 * Faça o teste do script. No navagador escreva:   
 
 `http://localhost/arduino.php?inf=teste`  
 
-Estará escrevendo no banco de dados a string "teste".
+Estará escrevendo no banco de dados a string "teste".  
 
-### Conectando o Arduino 
+### Conectando o Arduino  
+  
+Primeiramente é necessário desconectar de outras redes e deixar o ip da sua máquina estático ([veja aqui](https://www.tecmundo.com.br/internet/1836-o-que-e-ip-estatico-e-dinamico-.htm)).  
 
+Conecte o cabo de rede na sua máquina e no arduino. Pegue o arquivo do arduino e altere os campos ip e o servidor, lembrando que o campo do servidor irá o ip da sua máquina local.  
 
 ### Gráfico no html  
   
