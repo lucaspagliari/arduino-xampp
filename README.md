@@ -1,9 +1,9 @@
 # Enviando dados do Arduino para o Servidor XAMPP
-
-> Utilizado: php, arduino, ethernet shield e xampp
-
-### Teste os Scripts php:
-1 - Crie seu DB:  
+  
+> Utilizado: XAMPP, Arduino + Ethernet Shield
+  
+### Banco de Dados:
+1 -Inicialize o XAMPP e crie seu banco de dados:  
 
 `
 CREATE TABLE arduino(    
@@ -12,8 +12,9 @@ CREATE TABLE arduino(
   primary key (id) 
 )
 `  
+> Caso queira usar outros nomes e mais colunas na tabela, deverá alterar os scripts .php  
 
-2 - Copie e cole os arquivos .php dentro da pasta do XAMPP:  
+2 - Coloque a pasta js e todos os arquivos com extenções .php e .html no local:  
 
 `C:\xampp\htdocs`  
 
@@ -23,17 +24,14 @@ Isso possibilitará acessar os scripts pelo navegador.
 
 `http://localhost/arduino.php?inf=teste`  
 
-Estará passando a string "teste" como parâmetro.
+Estará escrevendo no banco de dados a string "teste".
 
 ### Utilizando o arduino
+Primeiramente é necessário desconectar de outras redes e deixar o ip da sua máquina estático ([veja aqui](https://www.tecmundo.com.br/internet/1836-o-que-e-ip-estatico-e-dinamico-.htm)).  
 
-Pegue o arquivo arduino e altere os campos ip e o servidor.
-No cmd identifique seu ipv4 com o comando `ipconfig`. Esse valor será utilizado no campo do servidor.
+Conecte o cabo de rede na sua máquina e no arduino. Pegue o arquivo do arduino e altere os campos ip e o servidor, lembrando que o campo do servidor irá o ip da sua máquina local.  
 
 ### Gráfico no html  
-
-Baixe JQuery e Chart.js coloque-os na pasta:  
-
-`C:\xampp\htdocs\js`  
-
-Após isso coloque o arquivo .html na pasta htdocs
+  
+Após toda configuração acesse:  
+`http://localhost/grafico.php`  
