@@ -2,10 +2,10 @@
 
 	include "conexao.php";
     
-    $sql = "SELECT id, inf FROM arduino";
+    $sql = "SELECT * FROM arduino";
     $result = $conn->query($sql);
     $data = "";
-    
+
     if ($result->num_rows > 0) {
         foreach ($result as $row) {
             $data .= $row["inf"] . ",";

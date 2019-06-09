@@ -17,7 +17,7 @@ IPAddress ip(192, 168, 0, 32);
 IPAddress gateway(192, 168, 0, 32);
 
 // Ip que será conectado
-IPAddress server(192,168,0,102);
+IPAddress server(192,168,15,4);
 
 EthernetClient client;
 
@@ -63,4 +63,3 @@ void loop(){
     }
     delay(4000);
 }
-
