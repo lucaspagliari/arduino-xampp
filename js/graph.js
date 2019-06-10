@@ -1,58 +1,57 @@
-const safeSensorValue = 200;
-const attentionSensorValue = 300;
-const dataMinimumLength = 30;
-const averageDivNumber = 10;
+
+const dataMinimumArrayLength = 30;
+const averageAmount = 10;
+
+const safeValueLimit = 200;
+const attentionValueLimit = 300;
+
 const stylePalette = [
-    { "r": 0, "g": 240, "b": 0, "text": "Safe" },
-    { "r": 255, "g": 255, "b": 0, "text": "Atention" },
-    { "r": 222, "g": 1, "b": 2, "text": "Danger" }
+    { "r": 10, "g": 250, "b": 10, "text": "Safe" },
+    { "r": 255, "g": 255, "b": 10, "text": "Atention" },
+    { "r": 222, "g": 10, "b": 10, "text": "Danger" }
 ]
+
 function start() {
-    setInterval(getInformationFromDataBase, 1000)
+    getInformationFromDataBase();
+    setInterval(getInformationFromDataBase, 4000);
 }
 
 function getInformationFromDataBase() {
     $.post("data.php", JSON.stringify(),
         function (data) {
-            const idArrayValues = [];
-            const sensorArrayValues = [];
-            const dataArray = data.split(",");
+            const idValuesArray = [];
+            const dataValuesArray = [];
+            data = data.split(",");
             let id = 0
-            if (dataArray.length >= dataMinimumLength) {
-                for (let i = dataArray.length - dataMinimumLength; i < dataArray.length; i++) {
-                    idArrayValues.push(id);
-                    sensorArrayValues.push(parseInt(dataArray[i]));
-                    id++;
-                }
-                idArrayValues.pop();
-                sensorArrayValues.pop();
-                renderGraph(idArrayValues, sensorArrayValues);
-                renderStatusInformation(sensorArrayValues);
-            } else {
-                document.querySelector("#chart-container").innerHTML = `<h2 class="titleInfo">Not Enough Values</h2>`;
+
+            for (let i = data.length - dataMinimumArrayLength; i < data.length; i++) {
+                idValuesArray.push(id);
+                dataValuesArray.push(parseInt(data[i]));
+                id++;
             }
+
+            idValuesArray.pop();
+            dataValuesArray.pop();
+
+            renderGraph(idValuesArray, dataValuesArray);
+            renderStatus(dataValuesArray);
         }
     );
 }
 
-function renderStatusInformation(dataValuesArray) {
+function getStyleAndAverageStatus(dataValuesArray) {
     let average = 0;
-    let indexPalette;
-    for (let i = dataValuesArray.length - averageDivNumber; i < dataValuesArray.length; i++) {
+    for (let i = dataValuesArray.length - averageAmount; i < dataValuesArray.length; i++) {
         average += dataValuesArray[i];
     }
-    
-    average /= averageDivNumber;
+    average /= averageAmount;
+    const indexPalette = average <= safeValueLimit ? 0 : average <= attentionValueLimit ? 1 : 2;
+    return [stylePalette[indexPalette], average];
+}
 
-    if (average <= safeSensorValue) {
-        indexPalette = 0;
-    } else if (average <= attentionSensorValue) {
-        indexPalette = 1;
-    } else {
-        indexPalette = 2
-    }
-
-    const style = stylePalette[indexPalette];
+function renderStatus(dataValuesArray) {
+    const status = getStyleAndAverageStatus(dataValuesArray);
+    const style = status[0];
     let html = `
         <tr>
             <th>Color</th>
@@ -62,7 +61,7 @@ function renderStatusInformation(dataValuesArray) {
         <tr>
             <td style="background-color:rgb(${style.r}, ${style.g}, ${style.b})"></td>
             <td style="color: rgb">${style.text}</td>
-            <td>${average}</td>
+            <td>${status[1]}</td>
         </tr>`;
 
     document.querySelector("#status-table").innerHTML = html;
@@ -71,7 +70,7 @@ function renderStatusInformation(dataValuesArray) {
 function renderGraph(xValues, yValues) {
     document.querySelector(".line-chart").innerHTML = ""
     let htmlGraph = document.querySelector(".line-chart");
-    var lineChart = new Chart(htmlGraph, {
+    let lineChart = new Chart(htmlGraph, {
         type: 'line',
         options: {
             animation: {
@@ -90,4 +89,5 @@ function renderGraph(xValues, yValues) {
         }
     });
 }
+
 start();
