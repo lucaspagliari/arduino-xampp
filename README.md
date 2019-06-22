@@ -1,5 +1,5 @@
-# Enviando dados do Arduino para o Servidor XAMPP
-  
+# Arduino e XAMPP
+  Forma alternativa de enviar dados do arduino para o servidor xampp, método não utiliza mysql connector
 > Utilizado: XAMPP, Arduino + Ethernet Shield
   
 ### Banco de Dados:  
